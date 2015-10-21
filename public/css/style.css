@@ -1,0 +1,30 @@
+/**************/
+/* Custom CSS */
+/**************/
+
+body{
+	background-color: #f3f3f1;
+	color: #3f4953;
+}
+
+h1 {
+	color: #f25a4f;
+}
+
+.animal {
+	min-height: 450px;
+}
+
+.animal img {
+	width: 100%;
+}
+
+#animal-holder{
+	margin-top: 75px;
+}
+
+/* IMPORTANT - must give map div height */
+#map-canvas { height:400px; }
+
+/* IMPORTANT - fixes webkit infoWindow rendering */
+#map-canvas img { max-width: none; }
