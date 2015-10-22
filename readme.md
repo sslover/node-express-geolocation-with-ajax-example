@@ -1,3 +1,5 @@
+Demo for this app is available at: https://pets-of-nyc.herokuapp.com/pets
+
 ## Node.js / Express.js / MongoDb (+Mongoose) Boilerplate
 
 This is boilerplate code for setting up a simple node.js RESTful API app using: the express.js framework, a MongoDb database (with the help of Mongoose), and hosting it on Heroku. Please refer to the following documentation for each of these components:
