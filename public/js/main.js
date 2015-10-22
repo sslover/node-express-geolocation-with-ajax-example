@@ -90,7 +90,11 @@ var renderPlaces = function() {
 
 			console.log(response);
 			animals = response.animals;
-			// now, loop through the animals and add markers to the map
+			// first clear any existing markers, because we will re-add below
+			clearMarkers();
+			markers = [];
+
+			// now, loop through the animals and add them as markers to the map
 			for(var i=0;i<animals.length;i++){
 
 				var latLng = {
@@ -106,7 +110,8 @@ var renderPlaces = function() {
 				});
 
 				bindInfoWindow(marker, map, infowindow, '<b>'+animals[i].name + "</b> ("+animals[i].breed+") <br>" + animals[i].location.name);
-				// not currently used but good to keep track of markers
+				
+				// keep track of markers
 				markers.push(marker);
 			}
 
@@ -169,6 +174,12 @@ function deleteAnimal(event){
 	})
 
 	event.preventDefault();
+}
+
+function clearMarkers(){
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(null); // clears the markers
+  }	
 }
 
 // when page is ready, initialize the map!
