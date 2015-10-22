@@ -82,6 +82,7 @@ var renderPlaces = function() {
 	var infowindow =  new google.maps.InfoWindow({
 	    content: ''
 	});
+
 	jQuery.ajax({
 		url : '/api/get',
 		dataType : 'json',
@@ -89,8 +90,7 @@ var renderPlaces = function() {
 
 			console.log(response);
 			animals = response.animals;
-			// loop through the animales and add markers to the map
-
+			// now, loop through the animals and add markers to the map
 			for(var i=0;i<animals.length;i++){
 
 				var latLng = {
@@ -127,6 +127,9 @@ var bindInfoWindow = function(marker, map, infowindow, html) {
 
 function renderAnimals(animals){
 
+	// first, make sure the #animal-holder is empty
+	jQuery('#animal-holder').empty();
+
 	// loop through all the animals and add them in the animal-holder div
 	for(var i=0;i<animals.length;i++){
 		var htmlToAdd = '<div class="col-md-4 animal">'+
@@ -139,12 +142,33 @@ function renderAnimals(animals){
 				'<li>Weight: '+animals[i].weight+'</li>'+
 				'<li>Tags: '+animals[i].tags+'</li>'+
 			'</ul>'+
+			'<button id="'+animals[i]._id+'" onclick="deleteAnimal(event)">Delete Animal</button>'+
 		'</div>';
 
 		jQuery('#animal-holder').prepend(htmlToAdd);
 
 	}
 
+}
+
+
+function deleteAnimal(event){
+	var targetedId = event.target.id;
+	console.log('the animal to delete is ' + targetedId);
+
+	// now, let's call the delete route with AJAX
+	jQuery.ajax({
+		url : '/api/delete/'+targetedId,
+		dataType : 'json',
+		success : function(response) {
+			// now, let's re-render the animals
+
+			renderPlaces();
+
+		}
+	})
+
+	event.preventDefault();
 }
 
 // when page is ready, initialize the map!
