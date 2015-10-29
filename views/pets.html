@@ -30,47 +30,47 @@
     <div class="row">
       <div class="col-md-4">
         <h1>Add a New Pet</h1>
-        <form class="form-horizontal">
+        <form class="form-horizontal" id="addForm">
           <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="name" placeholder="Name" name="name">
+              <input type="text" class="form-control" id="name" placeholder="Name" name="name" required>
             </div>
           </div>
           <div class="form-group">
             <label for="age" class="col-sm-2 control-label">Age</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="age" placeholder="Age" name="age">
+              <input type="text" class="form-control" id="age" placeholder="Age" name="age" required>
             </div>
           </div>
           <div class="form-group">
             <label for="tags" class="col-sm-2 control-label">Tags</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="tags" placeholder="Tags (separated by comma)" name="tags">
+              <input type="text" class="form-control" id="tags" placeholder="Tags (separated by comma)" name="tags" required>
             </div>
           </div> 
           <div class="form-group">
             <label for="breed" class="col-sm-2 control-label">Breed</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="breed" placeholder="Breed" name="breed">
+              <input type="text" class="form-control" id="breed" placeholder="Breed" name="breed" required>
             </div>
           </div>
           <div class="form-group">
             <label for="weight" class="col-sm-2 control-label">Weight</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="weight" placeholder="Weight" name="weight">
+              <input type="text" class="form-control" id="weight" placeholder="Weight" name="weight" required>
             </div>
           </div>
           <div class="form-group">
             <label for="url" class="col-sm-2 control-label">ImgURL</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="url" placeholder="PhotoURL" name="url">
+              <input type="text" class="form-control" id="url" placeholder="PhotoURL" name="url" required>
             </div>
           </div>
           <div class="form-group">
             <label for="location" class="col-sm-2 control-label">Location</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="location" placeholder="Location" name="location">
+              <input type="text" class="form-control" id="location" placeholder="Location" name="location" required>
             </div>
           </div>                                                
           <div class="form-group">
@@ -86,13 +86,103 @@
       </div>
     </div>
   </div>
-  
+
+  <!-- Edit Modal -->
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Edit an Animal</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" id="editForm">
+            <div class="form-group">
+              <label for="name" class="col-sm-2 control-label">Name</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="edit-name" placeholder="Name" name="name" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="age" class="col-sm-2 control-label">Age</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="edit-age" placeholder="Age" name="age" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="tags" class="col-sm-2 control-label">Tags</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="edit-tags" placeholder="Tags (separated by comma)" name="tags" required>
+              </div>
+            </div> 
+            <div class="form-group">
+              <label for="breed" class="col-sm-2 control-label">Breed</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="edit-breed" placeholder="Breed" name="breed" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="weight" class="col-sm-2 control-label">Weight</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="editWeight" placeholder="Weight" name="weight" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="url" class="col-sm-2 control-label">ImgURL</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="edit-url" placeholder="PhotoURL" name="url" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="location" class="col-sm-2 control-label">Location</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="edit-location" placeholder="Location" name="location" required>
+              </div>
+            </div>
+            <div class="form-group hide">
+              <label for="id" class="col-sm-2 control-label">ID</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="edit-id" placeholder="id" name="edit-id" required>
+              </div>
+            </div>                                                            
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">Submit</button>
+              </div>
+            </div>
+          </form>     
+        </div>
+      </div>
+    </div>
+  </div>
+
   </body>
 
     <!-- JQuery script -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyAcN6VtdpM55-CGGyEAWX2qEWs_Qwg4wXM"></script>    
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+
+    <!-- JQuery validate -->
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+
+    <script type="text/javascript">
+      $("form").validate({
+          rules: {
+            editWeight: {
+              required: true,
+              number: true // must be a number
+            },
+            weight: {
+              required: true,
+              number: true // must be a number
+            }
+          }
+      }); 
+    </script>    
 
     <!-- CUSTOM JS -->
     <script src="js/main.js"></script>

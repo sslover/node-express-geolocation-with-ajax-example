@@ -21,7 +21,7 @@ function init() {
 
 // add form button event
 // when the form is submitted (with a new animal), the below runs
-jQuery("form").submit(function(e){
+jQuery("#addForm").submit(function(e){
 
 	// first, let's pull out all the values
 	// the name form field value
@@ -58,7 +58,7 @@ jQuery("form").submit(function(e){
 	  		// re-render the map
 	  		renderPlaces();
 	  		// now, clear the input fields
-	  		jQuery("form input").val('');
+	  		jQuery("#addForm input").val('');
   		}
   		else {
   			alert("something went wrong");
@@ -122,6 +122,68 @@ var renderPlaces = function() {
 	})
 };
 
+// edit form button event
+// when the form is submitted (with a new animal edit), the below runs
+jQuery("#editForm").submit(function(e){
+
+	// first, let's pull out all the values
+	// the name form field value
+	var name = jQuery("#edit-name").val();
+	var age = jQuery("#edit-age").val();
+	var weight = jQuery("#editWeight").val();
+	var tags = jQuery("#edit-tags").val();
+	var breed = jQuery("#edit-breed").val();
+	var url = jQuery("#edit-url").val();
+	var location = jQuery("#edit-location").val();
+	var id = jQuery("#edit-id").val();
+
+	// make sure we have a location
+	if(!location || location=="") return alert('We need a location!');
+     
+  console.log(id);
+      
+	// POST the data from above to our API create route
+  jQuery.ajax({
+  	url : '/api/update/'+id,
+  	dataType : 'json',
+  	type : 'POST',
+  	// we send the data in a data object (with key/value pairs)
+  	data : {
+  		name : name,
+  		age : age,
+  		tags : tags,
+  		breed : breed,
+  		weight: weight,
+  		url : url,
+  		location : location
+  	},
+  	success : function(response){
+  		if(response.status=="OK"){
+	  		// success
+	  		console.log(response);
+	  		// re-render the map
+	  		renderPlaces();
+	  		// now, close the modal
+	  		$('#editModal').modal('hide')
+	  		// now, clear the input fields
+	  		jQuery("#editForm input").val('');
+  		}
+  		else {
+  			alert("something went wrong");
+  		}
+  	},
+  	error : function(err){
+  		// do error checking
+  		alert("something went wrong");
+  		console.error(err);
+  	}
+  }); 
+
+	// prevents the form from submitting normally
+  e.preventDefault();
+  return false;
+});
+
 // binds a map marker and infoWindow together on click
 var bindInfoWindow = function(marker, map, infowindow, html) {
     google.maps.event.addListener(marker, 'click', function() {
@@ -138,23 +200,53 @@ function renderAnimals(animals){
 	// loop through all the animals and add them in the animal-holder div
 	for(var i=0;i<animals.length;i++){
 		var htmlToAdd = '<div class="col-md-4 animal">'+
-			'<img src="'+animals[i].url+'">'+
-			'<h1>'+animals[i].name+'</h1>'+
+			'<img class="url" src="'+animals[i].url+'">'+
+			'<h1 class="name">'+animals[i].name+'</h1>'+
 			'<ul>'+
-				'<li>Location: '+animals[i].location.name+'</li>'+
-				'<li>Breed: '+animals[i].breed+'</li>'+
-				'<li>Age: '+animals[i].age+'</li>'+
-				'<li>Weight: '+animals[i].weight+'</li>'+
-				'<li>Tags: '+animals[i].tags+'</li>'+
+				'<li>Location: <span class="location">'+animals[i].location.name+'</span></li>'+
+				'<li>Breed: <span class="breed">'+animals[i].breed+'</span></li>'+
+				'<li>Age: <span class="age">'+animals[i].age+'</span></li>'+
+				'<li>Weight: <span class="weight">'+animals[i].weight+'</span></li>'+
+				'<li>Tags: <span class="tags">'+animals[i].tags+'</span></li>'+
+				'<li class="hide id">'+animals[i]._id+'</li>'+
 			'</ul>'+
-			'<button id="'+animals[i]._id+'" onclick="deleteAnimal(event)">Delete Animal</button>'+
+			'<button type="button" id="'+animals[i]._id+'" onclick="deleteAnimal(event)">Delete Animal</button>'+
+			'<button type="button" data-toggle="modal" data-target="#editModal"">Edit Animal</button>'+
 		'</div>';
 
 		jQuery('#animal-holder').prepend(htmlToAdd);
 
 	}
-
 }
+
+jQuery('#editModal').on('show.bs.modal', function (e) {
+  // let's get access to what we just clicked on
+  var clickedButton = e.relatedTarget;
+  // now let's get its parent
+	var parent = jQuery(clickedButton).parent();
+
+  // now, let's get the values of the pet that we're wanting to edit
+  // we do this by targeting specific spans within the parent and pulling out the text
+  var name = $(parent).find('.name').text();
+  var age = $(parent).find('.age').text();
+  var weight = $(parent).find('.weight').text();
+  var tags = $(parent).find('.tags').text();
+  var breed = $(parent).find('.breed').text();
+  var url = $(parent).find('.url').attr('src');
+  var location = $(parent).find('.location').text();
+  var id = $(parent).find('.id').text();
+
+  // now let's set the value of the edit fields to those values
+ 	jQuery("#edit-name").val(name);
+	jQuery("#edit-age").val(age);
+	jQuery("#editWeight").val(weight);
+	jQuery("#edit-tags").val(tags);
+	jQuery("#edit-breed").val(breed);
+	jQuery("#edit-url").val(url);
+	jQuery("#edit-location").val(location);
+	jQuery("#edit-id").val(id);
+
+})
 
 
 function deleteAnimal(event){
