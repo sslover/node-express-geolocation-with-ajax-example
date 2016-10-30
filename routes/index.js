@@ -40,6 +40,7 @@ router.post('/api/create', function(req, res){
     console.log('the data we received is --> ')
     console.log(req.body);
 
+    
     // pull out the information from the req.body
     var name = req.body.name;
     var age = req.body.age;

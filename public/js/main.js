@@ -19,8 +19,6 @@ function init() {
   renderPlaces();
 }
 
-// add form button event
-// when the form is submitted (with a new animal), the below runs
 jQuery("#addForm").submit(function(e){
 
 	// first, let's pull out all the values
@@ -33,9 +31,9 @@ jQuery("#addForm").submit(function(e){
 	var url = jQuery("#url").val();
 	var location = jQuery("#location").val();
 
-	// make sure we have a location
+		// make sure we have a location
 	if(!location || location=="") return alert('We need a location!');
-      
+
 	// POST the data from above to our API create route
   jQuery.ajax({
   	url : '/api/create',
@@ -69,12 +67,77 @@ jQuery("#addForm").submit(function(e){
   		alert("something went wrong");
   		console.error(err);
   	}
-  }); 
+  });
 
 	// prevents the form from submitting normally
   e.preventDefault();
   return false;
+
 });
+
+
+
+
+
+
+
+
+
+// // when the addForm is submitted (with a new animal), the below runs
+// jQuery("#addForm").submit(function(e){
+
+// 	// first, let's pull out all the values
+// 	// the name form field value
+// 	var name = jQuery("#name").val();
+// 	var age = jQuery("#age").val();
+// 	var weight = jQuery("#weight").val();
+// 	var tags = jQuery("#tags").val();
+// 	var breed = jQuery("#breed").val();
+// 	var url = jQuery("#url").val();
+// 	var location = jQuery("#location").val();
+
+// 	// make sure we have a location
+// 	if(!location || location=="") return alert('We need a location!');
+      
+// 	// POST the data from above to our API create route
+//   jQuery.ajax({
+//   	url : '/api/create',
+//   	dataType : 'json',
+//   	type : 'POST',
+//   	// we send the data in a data object (with key/value pairs)
+//   	data : {
+//   		name : name,
+//   		age : age,
+//   		tags : tags,
+//   		breed : breed,
+//   		weight: weight,
+//   		url : url,
+//   		location : location
+//   	},
+//   	success : function(response){
+//   		if(response.status=="OK"){
+// 	  		// success
+// 	  		console.log(response);
+// 	  		// re-render the map
+// 	  		renderPlaces();
+// 	  		// now, clear the input fields
+// 	  		jQuery("#addForm input").val('');
+//   		}
+//   		else {
+//   			alert("something went wrong");
+//   		}
+//   	},
+//   	error : function(err){
+//   		// do error checking
+//   		alert("something went wrong");
+//   		console.error(err);
+//   	}
+//   }); 
+
+// 	// prevents the form from submitting normally
+//   e.preventDefault();
+//   return false;
+// });
 
 // get Animals JSON from /api/get
 // loop through and populate the map with markers
@@ -276,3 +339,12 @@ function clearMarkers(){
 
 // when page is ready, initialize the map!
 google.maps.event.addDomListener(window, 'load', init);
+
+
+//window.addEventListener('load',init);
+
+
+
+
+
+
